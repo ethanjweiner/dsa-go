@@ -12,6 +12,23 @@ type Node struct {
 	Next *Node
 }
 
+func (l *LinkedList) Search(value any) bool {
+	currentNode := l.Head
+
+	for currentNode != nil {
+		if currentNode.Data == value {
+			return true
+		}
+		currentNode = currentNode.Next
+	}
+
+	return false
+}
+
+func (l *LinkedList) Insert(value any) {
+	l.Prepend(&Node{Data: value})
+}
+
 func (l *LinkedList) Prepend(n *Node) {
 	n.Next = l.Head
 	l.Head = n

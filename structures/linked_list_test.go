@@ -27,7 +27,13 @@ func (suite *LinkedListTestSuite) SetupTest() {
 	suite.NonEmptyList.Prepend(suite.Node3)
 }
 
-// Write tests as methods of the suite
+func (suite *LinkedListTestSuite) TestSearch() {
+	suite.True(suite.NonEmptyList.Search(1))
+	suite.True(suite.NonEmptyList.Search(2))
+	suite.True(suite.NonEmptyList.Search(3))
+	suite.False(suite.NonEmptyList.Search(0))
+}
+
 func (suite *LinkedListTestSuite) TestPrepend() {
 	suite.EmptyList.Prepend(suite.Node1)
 	suite.Equal(suite.EmptyList.Head, suite.Node1)
