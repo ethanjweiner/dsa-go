@@ -1,4 +1,4 @@
-module dsa-go
+module github.com/ethanjweiner/dsa-go
 
 go 1.19
 
