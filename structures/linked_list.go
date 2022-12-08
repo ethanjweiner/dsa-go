@@ -68,3 +68,20 @@ func (l *LinkedList) DeleteWithValue(value any) {
 		currentNode = currentNode.Next
 	}
 }
+
+func (l *LinkedList) Reverse() {
+	if l.Head == nil || l.Head.Next == nil {
+		return
+	}
+
+	nodeToPrepend := l.Head.Next
+	l.Head.Next = nil
+
+	for nodeToPrepend != nil {
+		nodeToPrependNext := nodeToPrepend.Next
+		nodeToPrepend.Next = l.Head
+		l.Head = nodeToPrepend
+		nodeToPrepend = nodeToPrependNext
+	}
+
+}
