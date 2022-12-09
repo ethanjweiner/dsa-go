@@ -16,6 +16,15 @@ type BSTTestSuite struct {
 	bst3  *BST[int]
 }
 
+/*
+BST3:
+      10
+			/ \
+		6   11
+	 / \    \
+	5  9    15
+*/
+
 func (suite *BSTTestSuite) SetupTest() {
 	suite.leaf1 = &BST[int]{Data: 5}
 	suite.leaf2 = &BST[int]{Data: 9}
@@ -54,6 +63,47 @@ func (suite *BSTTestSuite) TestSearchLeaf() {
 func (suite *BSTTestSuite) TestSearchTree() {
 	suite.Equal(true, suite.bst3.Search(5))
 	suite.Equal(true, suite.bst3.Search(11))
+}
+
+func (suite *BSTTestSuite) TestDeleteLeaf() {
+	suite.bst3.Delete(5)
+	suite.bst3.Delete(9)
+	suite.False(suite.bst3.Search(5))
+	suite.False(suite.bst3.Search(9))
+	suite.True(suite.bst3.Search(15))
+	suite.True(suite.bst3.Search(10))
+}
+
+func (suite *BSTTestSuite) TestDeleteWithOneChild() {
+	suite.bst3.Delete(11)
+	suite.False(suite.bst3.Search(11))
+	suite.True(suite.bst3.Search(15))
+}
+
+func (suite *BSTTestSuite) TestDeleteWithTwoChildren() {
+	suite.bst3.Delete(6)
+	suite.False(suite.bst3.Search(6))
+	suite.True(suite.bst3.Search(10))
+	suite.True(suite.bst3.Search(5))
+	suite.True(suite.bst3.Search(9))
+	suite.Equal(5, suite.bst3.Left.Left.Data)
+}
+
+func (suite *BSTTestSuite) TestDeleteWithSuccessorWithRightChild() {
+	suite.bst3.Delete(10)
+	suite.False(suite.bst3.Search(10))
+	suite.True(suite.bst3.Search(11))
+	suite.True(suite.bst3.Search(15))
+	suite.Equal(11, suite.bst3.Data)
+	suite.Equal(15, suite.bst3.Right.Data)
+}
+
+func (suite *BSTTestSuite) TestTraverseInOrder() {
+	flattened := []int{}
+	suite.bst3.TraverseInOrder(func(data int) {
+		flattened = append(flattened, data)
+	})
+	suite.Equal([]int{5, 6, 9, 10, 11, 15}, flattened)
 }
 
 func TestBSTTestSuite(t *testing.T) {
