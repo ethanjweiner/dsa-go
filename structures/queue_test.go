@@ -8,11 +8,11 @@ import (
 
 type QueueTestSuite struct {
 	suite.Suite
-	queue1 *Queue
+	queue1 *Queue[int]
 }
 
 func (suite *QueueTestSuite) SetupTest() {
-	suite.queue1 = &Queue{}
+	suite.queue1 = &Queue[int]{}
 	suite.queue1.Enqueue(1)
 	suite.queue1.Enqueue(2)
 	suite.queue1.Enqueue(3)
